@@ -5,6 +5,9 @@ using System.Linq;
 [ExecuteInEditMode] // makes GUI show in edit mode
 public class Networking : MonoBehaviour
 {
+    public static Networking Instance
+    { get; private set; }
+
     private string gameName = "TheVenomEventTestName"; // make the name authentic to reduce chance of error
 
     private bool refreshing = false;
@@ -19,13 +22,14 @@ public class Networking : MonoBehaviour
     public string serverInfo = "";
     public string serverPass = "";
     
-    public string playerName = "";
+    private string playerName = "";
     public string clientPass = "";
     
     public Vector2 scrollPosition = Vector2.zero;
 
     private void Start()
     {
+        Networking.Instance = this;
         this.playerName = PlayerPrefs.GetString("Player Name"); // loads your previosuly used player names
     }
 
@@ -103,7 +107,6 @@ public class Networking : MonoBehaviour
                         if (GUI.Button(new Rect(800, 30 + i*30, 100, 25), "Join"))
                         {
                             Network.Connect(this.hostData[i], this.clientPass);
-                            Application.LoadLevel("Level");
                         }
                     }
 
@@ -132,8 +135,7 @@ public class Networking : MonoBehaviour
             }
 
             GUI.Label(new Rect(Screen.width/2f - 35f, Screen.height/1.2f - 30f, 100, 20), "Your Name:");
-            this.playerName = GUI.TextField(new Rect(Screen.width/2f - 50f, Screen.height/1.2f, 100, 20),
-                this.playerName, 12);
+            this.playerName = GUI.TextField(new Rect(Screen.width/2f - 50f, Screen.height/1.2f, 100, 20), this.playerName, 12);
         }
     }
 
@@ -163,25 +165,24 @@ public class Networking : MonoBehaviour
     private void OnServerInitialized()
     {
         DontDestroyOnLoad(this.transform.gameObject);
-
+        this.LobbySpawn();
         Application.LoadLevel("Level");
 
-        this.LobbySpawn();
+        
     }
 
     private void OnConnectedToServer()
     {
         this.LobbySpawn();
+        Application.LoadLevel("Level");
     }
 
-    private IEnumerator LobbySpawn()
+    private void LobbySpawn()
     {
-        yield return new WaitForSeconds(0.1f);
-
-        var made =
-            Network.Instantiate(this.playerPrefab, this.transform.position, this.transform.rotation, 0) as GameObject;
+        var made = Network.Instantiate(Networking.Instance.playerPrefab, new Vector3(-17.3f, 3f, -1f), Quaternion.Euler(Vector3.zero), 0) as GameObject;
         made.GetComponent<PlayerControl>().playerName = this.playerName;
-
+        DontDestroyOnLoad(made);
+        Debug.Log("we're actually running it.");
         PlayerPrefs.SetString("Player Name", this.playerName);
 
         if (Network.isClient)

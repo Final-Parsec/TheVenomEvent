@@ -204,7 +204,6 @@ MonoBehaviour:
   serverName: 
   serverInfo: 
   serverPass: 
-  playerName: 
   clientPass: 
   scrollPosition: {x: 0, y: 0}
 --- !u!4 &1902407015

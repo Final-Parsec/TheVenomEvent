@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class CameraFollow : MonoBehaviour 
 {
@@ -17,7 +18,8 @@ public class CameraFollow : MonoBehaviour
 	void Awake ()
 	{
 		// Setting up the reference.
-		player = GameObject.FindGameObjectWithTag("Player").transform;
+        var playerControl = Object.FindObjectsOfType(typeof(PlayerControl)).Select(pc => pc as PlayerControl).First(pc => pc.playerName == PlayerPrefs.GetString("Player Name"));
+        this.player = playerControl.transform;
 	}
 
 
