@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using NetworkView = UnityEngine.NetworkView;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class PlayerControl : MonoBehaviour
 	public float maxSpeed = 5f;				// The fastest the player can travel in the x axis.
 	public AudioClip[] jumpClips;			// Array of clips for when the player jumps.
 	public float jumpForce = 1000f;			// Amount of force added when the player jumps.
-	public AudioClip[] taunts;				// Array of clips for when the player taunts.
+    public string playerName = "DefaultPlayerName";
+    public AudioClip[] taunts;				// Array of clips for when the player taunts.
 	public float tauntProbability = 50f;	// Chance of a taunt happening.
 	public float tauntDelay = 1f;			// Delay for when the taunt should happen.
 
@@ -71,23 +73,28 @@ public class PlayerControl : MonoBehaviour
 			Flip();
 
 		// If the player should jump...
-		if(jump)
+		if(this.jump)
 		{
-			// Set the Jump animator trigger parameter.
-			anim.SetTrigger("Jump");
-
-			// Play a random jump audio clip.
-			int i = Random.Range(0, jumpClips.Length);
-			AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
-
-			// Add a vertical force to the player.
-			GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
-
-			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
-			jump = false;
+		    this.GetComponent<UnityEngine.NetworkView>().RPC("Jump", RPCMode.AllBuffered);
 		}
 	}
-	
+
+    [RPC]
+    public void Jump()
+    {
+        // Set the Jump animator trigger parameter.
+        anim.SetTrigger("Jump");
+
+        // Play a random jump audio clip.
+        int i = Random.Range(0, jumpClips.Length);
+        AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
+
+        // Add a vertical force to the player.
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
+
+        // Make sure the player can't jump again until the jump conditions from Update are satisfied.
+        jump = false;
+    }
 	
 	void Flip ()
 	{
