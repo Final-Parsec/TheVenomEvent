@@ -179,7 +179,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1902407015}
-  - 114: {fileID: 1902407014}
+  - 114: {fileID: 1902407016}
+  - 148: {fileID: 1902407014}
   m_Layer: 0
   m_Name: Networking
   m_TagString: Untagged
@@ -187,25 +188,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1902407014
-MonoBehaviour:
+--- !u!148 &1902407014
+NetworkView:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1902407013}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b1836e87e0ef2044a1e9e3a6222c1ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 100020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-  create: 0
-  joining: 0
-  serverName: 
-  serverInfo: 
-  serverPass: 
-  clientPass: 
-  scrollPosition: {x: 0, y: 0}
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 1902407015}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
 --- !u!4 &1902407015
 Transform:
   m_ObjectHideFlags: 0
@@ -218,3 +212,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &1902407016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1902407013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d24ad2887024b1848a844b259148ea62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
+  chosenGameName: 

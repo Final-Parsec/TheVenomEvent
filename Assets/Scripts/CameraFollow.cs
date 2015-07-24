@@ -18,8 +18,16 @@ public class CameraFollow : MonoBehaviour
 	void Awake ()
 	{
 		// Setting up the reference.
-        var playerControl = Object.FindObjectsOfType(typeof(PlayerControl)).Select(pc => pc as PlayerControl).First(pc => pc.playerName == PlayerPrefs.GetString("Player Name"));
-        this.player = playerControl.transform;
+        var playerControl = GetComponentInParent<PlayerControl>();
+
+		if(!playerControl.inControl)
+		{
+			gameObject.SetActive(false);
+		}
+		else
+		{
+        	this.player = playerControl.transform;
+		}
 	}
 
 
