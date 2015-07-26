@@ -78,11 +78,22 @@ public class PlayerControl : MonoBehaviour
 				MoveHorizontal(force.x, force.y);
 			}
 
-			// change the players facing direction
-			if(h > 0 && !facingRight || h < 0 && facingRight)
-			{
-				Flip();
+			if (Camera.current != null) 
+			{ 
+				// check if mouse is on the right and player is facing left.  If yes, turn player right.
+				if(Camera.current.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, Input.mousePosition.z - Camera.current.transform.position.z)).x
+				   > this.transform.position.x && !this.facingRight)
+				{
+					TurnRight();
+				}
+				// check if mouse is on the left side of the player, and the player is facing left. if yes, turn player left.
+				if(Camera.current.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, Input.mousePosition.z - Camera.current.transform.position.z)).x
+				   < this.transform.position.x && this.facingRight)
+				{
+					TurnLeft();
+				}
 			}
+
 
 			// jump
 			if(this.jump)
@@ -110,6 +121,32 @@ public class PlayerControl : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Turns the player to the right.
+	/// </summary>
+	void TurnRight(){
+		// Switch the way the player is labelled as facing.
+		facingRight = true;
+		
+		// Multiply the player's x local scale by -1.
+		Vector3 theScale = transform.localScale;
+		theScale.x = Mathf.Abs (theScale.x);  //make x positive
+		transform.localScale = theScale;
+	}
+
+	/// <summary>
+	/// Turns the player to the right
+	/// </summary>
+	void TurnLeft(){
+		// Switch the way the player is labelled as facing.
+		facingRight = !facingRight;
+		
+		// Multiply the player's x local scale by -1.
+		Vector3 theScale = transform.localScale;
+		theScale.x = Mathf.Abs (theScale.x) * -1; //make x negative
+		transform.localScale = theScale;
+	}
+
     void Jump()
     {
         // Set the Jump animator trigger parameter.
@@ -122,17 +159,6 @@ public class PlayerControl : MonoBehaviour
         // Add a vertical force to the player.
 		rigidBody.AddForce(new Vector2(0f, jumpForce));
     }
-
-	void Flip()
-	{
-		// Switch the way the player is labelled as facing.
-		facingRight = !facingRight;
-
-		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
-	}
 
 	[RPC]
 	void updatePlayer(Vector3 position, Vector3 velocity){

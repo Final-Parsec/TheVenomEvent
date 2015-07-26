@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour
 	private Animator anim;					// Reference to the Animator component.
 
 
+
 	void Awake()
 	{
 		// Setting up the references.
@@ -21,6 +22,10 @@ public class Gun : MonoBehaviour
 
 	void Update ()
 	{
+		//point gun towards mouse
+		RotateToFace ();
+
+
 		// If the fire button is pressed...
 		if(Input.GetButtonDown("Fire1"))
 		{
@@ -42,5 +47,25 @@ public class Gun : MonoBehaviour
 				bulletInstance.velocity = new Vector2(-speed, 0);
 			}
 		}
+	}
+
+	void RotateToFace(){
+		if (Camera.current == null) 
+		{ 
+//			Debug.Log("camera is not set.");
+			return; 
+		}
+
+		Vector3 mousePosition = Camera.current.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, Input.mousePosition.z - Camera.current.transform.position.z));
+
+		//Rotates toward the mouse
+		float tempAngle = Mathf.Atan2 ((mousePosition.y - transform.position.y), (mousePosition.x - transform.position.x)) * Mathf.Rad2Deg;
+		if (Mathf.Abs (tempAngle) > 90)
+			tempAngle += 180;
+		//fix aberration when mouse is on left side of player
+		if (!playerCtrl.facingRight)
+			tempAngle *= -1;
+
+		transform.eulerAngles = new Vector3 (0, 0, tempAngle);
 	}
 }
