@@ -1,11 +1,16 @@
 fileFormatVersion: 2
 guid: 679f315330b622640b1c03ee8561258f
-timeCreated: 1437944310
+timeCreated: 1437956397
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: body
     21300002: rightLeg
+    21300004: helmet
+    21300006: jetpack
+    21300008: arm_with_assault_rifle
+    21300010: leg
+    21300012: char_hero_LunarPioneer_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -51,23 +56,63 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: body
+    - name: helmet
       rect:
         serializedVersion: 2
-        x: 0
-        y: 492
-        width: 428
-        height: 553
+        x: 725
+        y: 687
+        width: 375
+        height: 391
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: rightLeg
+    - name: jetpack
       rect:
         serializedVersion: 2
-        x: 94
-        y: 0
+        x: 1144
+        y: 837
+        width: 148
+        height: 354
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: arm_with_assault_rifle
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 508
+        width: 396
+        height: 218
+      alignment: 9
+      pivot: {x: .113060467, y: .393503159}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: body
+      rect:
+        serializedVersion: 2
+        x: 1255
+        y: 264
+        width: 365
+        height: 312
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: leg
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 126
         width: 188
         height: 326
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: char_hero_LunarPioneer_5
+      rect:
+        serializedVersion: 2
+        x: 1110
+        y: 0
+        width: 164
+        height: 258
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
