@@ -16,7 +16,7 @@ public class BackgroundParallax : MonoBehaviour
 	void Awake ()
 	{
 		// Setting up the reference shortcut.
-		cam = Camera.main.transform;
+    
 	}
 
 
