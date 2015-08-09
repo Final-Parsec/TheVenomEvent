@@ -17,7 +17,8 @@ public class NetworkManager : MonoBehaviour {
 
     void Start()
     {
-        Network.Connect("162.243.141.8", 2003);
+        Network.Connect("127.0.0.1", 2003);
+        //Network.Connect("162.243.141.8", 2003);
     }
 	
 	void OnConnectedToServer() {
