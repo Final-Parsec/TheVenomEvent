@@ -39,7 +39,11 @@ public class NetworkManager : MonoBehaviour {
         var myPlayer = players.FirstOrDefault(thisPlayer => thisPlayer.GetComponent<NetworkView>().viewID == playerId);
         if (myPlayer != null)
         {
-            myPlayer.GetComponent<PlayerControl>().inControl = true;
+            PlayerControl playerControl = myPlayer.GetComponent<PlayerControl>();
+			playerControl.inControl = true;
+			CameraFollow cameraFollow = (Instantiate (Resources.Load ("RuntimePrefabs/MainCamera")) as GameObject).GetComponent<CameraFollow>();
+			cameraFollow.Player = playerControl.transform;
+			cameraFollow.gameObject.tag = "MainCamera";
         }
     }
 
