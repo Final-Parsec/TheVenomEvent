@@ -648,6 +648,8 @@ MonoBehaviour:
   facingRight: 1
   jump: 0
   inControl: 0
+  serverPosition: {x: 0, y: 0, z: 0}
+  serverRotation: {x: 0, y: 0, z: 0, w: 0}
   moveForce: 365
   maxSpeed: 8
   jumpClips:
@@ -667,6 +669,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ddd0ca15e5d0a42b98f08337c1690bb1, type: 3}
   tauntProbability: 50
   tauntDelay: 1
+  netView: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -709,7 +712,7 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   m_Enabled: 1
-  m_StateSynchronization: 0
+  m_StateSynchronization: 2
   m_Observed: {fileID: 400020}
   m_ViewID:
     m_ID: 0

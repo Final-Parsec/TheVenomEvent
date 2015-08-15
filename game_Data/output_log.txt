@@ -13,108 +13,238 @@ Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Man
 Loading C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.042 seconds
+- Completed reload, in  0.044 seconds
 desktop: 1920x1080 60Hz; virtual: 3840x2160 at -1920,-1080
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
 Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\System.Core.dll (this message is harmless)
-NullReferenceException: Object reference not set to an instance of an object
-  at LayBombs.Awake () [0x00000] in <filename unknown>:0 
+View ID SceneID: 3 Level Prefix: 0 not found during lookup. Strange behaviour may occur
  
-(Filename:  Line: -1)
+(Filename:  Line: 1690)
+
+Received state update for view id' SceneID: 3 Level Prefix: 0' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
 
 NullReferenceException: Object reference not set to an instance of an object
   at LayBombs.Awake () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
 
-Initialize engine version: 5.0.0f4 (5b98b70ebeb9)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1333]
-    Renderer: AMD Radeon HD 6900 Series
-    Vendor:   ATI
-    VRAM:     2032 MB (via DXGI)
-    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 NULL=1 RESZ=1 SlowINTZ=1
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.043 seconds
-desktop: 1920x1080 60Hz; virtual: 3840x2160 at -1920,-1080
-<RI> Initializing input.
-<RI> Input initialized.
-<RI> Initialized touch support.
-Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\System.Core.dll (this message is harmless)
-NullReferenceException: Object reference not set to an instance of an object
-  at LayBombs.Awake () [0x00000] in <filename unknown>:0 
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
  
-(Filename:  Line: -1)
+(Filename:  Line: 1690)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at LayBombs.Awake () [0x00000] in <filename unknown>:0 
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
  
-(Filename:  Line: -1)
+(Filename:  Line: 2483)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at LayBombs.Awake () [0x00000] in <filename unknown>:0 
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
  
-(Filename:  Line: -1)
+(Filename:  Line: 1690)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at LayBombs.Awake () [0x00000] in <filename unknown>:0 
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
  
-(Filename:  Line: -1)
+(Filename:  Line: 2483)
 
-Initialize engine version: 5.0.0f4 (5b98b70ebeb9)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1333]
-    Renderer: AMD Radeon HD 6900 Series
-    Vendor:   ATI
-    VRAM:     2032 MB (via DXGI)
-    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 NULL=1 RESZ=1 SlowINTZ=1
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.045 seconds
-desktop: 1920x1080 60Hz; virtual: 3840x2160 at -1920,-1080
-<RI> Initializing input.
-<RI> Input initialized.
-<RI> Initialized touch support.
-Platform assembly: C:\Users\Matthew\Documents\GitHub\TheVenomEvent\game_Data\Managed\System.Core.dll (this message is harmless)
-NullReferenceException: Object reference not set to an instance of an object
-  at LayBombs.Awake () [0x00000] in <filename unknown>:0 
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
  
-(Filename:  Line: -1)
+(Filename:  Line: 1690)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at LayBombs.Awake () [0x00000] in <filename unknown>:0 
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
  
-(Filename:  Line: -1)
+(Filename:  Line: 2483)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at LayBombs.Awake () [0x00000] in <filename unknown>:0 
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
  
-(Filename:  Line: -1)
+(Filename:  Line: 1690)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at LayBombs.Awake () [Nx00000] in <filename uulnRenoerence E
-xc
-eptlion:e:O jectnere eren
-
-e not set to an instance of an object
-  at LayBombs.Awake () [0x00000] in <filename unknown>:0 
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
  
-(Filename:  Line: -1)
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+View ID AllocatedID: 1 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' AllocatedID: 1' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.639422 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 505.
+Total: 0.239914 ms (FindLiveObjects: 0.048560 ms CreateObjectMapping: 0.019686 ms MarkObjects: 0.160643 ms  DeleteObjects: 0.009449 ms)
+
+View ID SceneID: 3 Level Prefix: 0 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1690)
+
+Received state update for view id' SceneID: 3 Level Prefix: 0' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2483)
 
 NullReferenceException: Object reference not set to an instance of an object
   at LayBombs.Awake () [0x00000] in <filename unknown>:0 

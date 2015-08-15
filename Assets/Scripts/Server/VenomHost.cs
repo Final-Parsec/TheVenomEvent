@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 [ExecuteInEditMode] 
 public class VenomHost : MonoBehaviour
 {
     private static readonly IConfigurationProvider ConfigurationProvider = new HardCodedConfigurationProvider();
     private static readonly IMapData MapData = new HardCodedMapData();
+	private List<PlayerControl> players = new List<PlayerControl>();
 
     public Transform player;
     
@@ -25,6 +27,20 @@ public class VenomHost : MonoBehaviour
         Debug.Log("The server has started!");
     }
 
+	void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer){
+		PlayerControl found= null;
+		foreach (PlayerControl player in players) {
+			if (player.owner == disconnectedPlayer) {
+				found = player;
+				Network.RemoveRPCs(player.netView.viewID);
+				Network.Destroy(player.gameObject);
+			}
+		}
+		if (found) {
+			players.Remove(found);
+		}
+	}
+
     private void StartServer()
     {
         Debug.Log("StartServer");
@@ -41,12 +57,17 @@ public class VenomHost : MonoBehaviour
     [RPC]
     void MakePlayer(NetworkPlayer thisPlayer, int teamId)
     {
+
         Debug.Log("MakePlayer RPC");
         var newPlayer = Network.Instantiate(
             this.player,
             VenomHost.MapData.GetSpawnPosition(teamId),
             Quaternion.Euler(Vector3.zero),
             0) as Transform;
+
+		PlayerControl playerControler = newPlayer.GetComponent<PlayerControl>();
+		playerControler.owner = thisPlayer;
+		players.Add(playerControler);
 
         this.GetComponent<NetworkView>().RPC(
             "SetupPlayerControl",

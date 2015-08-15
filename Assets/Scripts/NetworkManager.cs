@@ -47,21 +47,6 @@ public class NetworkManager : MonoBehaviour {
         }
     }
 
-    [RPC]
-	void enableCamera(NetworkViewID playerID){
-		GameObject[] players;
-		players = GameObject.FindGameObjectsWithTag ("Player");
-		foreach(GameObject thisPlayer in players){
-			if(thisPlayer.GetComponent<UnityEngine.NetworkView>().viewID == playerID){
-				thisPlayer.GetComponent<PlayerControl>().inControl = true;
-				Transform myCamera = thisPlayer.transform.Find("Camera");
-				myCamera.GetComponent<Camera>().enabled = true;
-				myCamera.GetComponent<Camera>().GetComponent<AudioListener>().enabled = true;
-				break;
-			}
-		}
-	}
-	
 	public IEnumerator RefreshHostList ()
 	{
 	    MasterServer.ipAddress = "127.0.0.1";
@@ -74,27 +59,4 @@ public class NetworkManager : MonoBehaviour {
 			yield return new WaitForEndOfFrame();
 		}
 	}
-	
-    ////public void OnGUI(){
-    ////    if (Network.isClient || Network.isServer) {
-    ////        return;
-    ////    }
-    ////    if(chosenGameName == ""){
-    ////        GUI.Label(new Rect(Screen.width/2 - Screen.width/10, Screen.height/2 - Screen.height/20, Screen.width/5,Screen.height/20), "Game Name");
-    ////    }
-    ////    chosenGameName = GUI.TextField(new Rect(Screen.width/2 - Screen.width/10, Screen.height/2 - Screen.height/20, Screen.width/5,Screen.height/20), chosenGameName, 25);
-    ////    if (GUI.Button (new Rect (Screen.width/2 - Screen.width/10, Screen.height/2, Screen.width/5,Screen.height/10), "Start New Server")) {
-    ////        StartServer();
-    ////    }
-    ////    if (GUI.Button (new Rect (Screen.width/2 - Screen.width/10, Screen.height/2 + Screen.height/10, Screen.width/5,Screen.height/10), "Find Servers")) {
-    ////        StartCoroutine(RefreshHostList());
-    ////    }
-    ////    if (hostData != null) {
-    ////        for(int i = 0; i < hostData.Length; i++){
-    ////            if(GUI.Button (new Rect (Screen.width/2 - Screen.width/10, Screen.height/2 + ((Screen.height/20)*(i+4)), Screen.width/5,Screen.height/20), hostData[i].gameName)) {
-    ////                Network.Connect(hostData[i]);
-    ////            }
-    ////        }
-    ////    }
-    ////}
 }

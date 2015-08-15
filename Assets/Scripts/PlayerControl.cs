@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using NetworkView = UnityEngine.NetworkView;
 
 [RequireComponent(typeof(NetworkView))]
@@ -15,7 +16,13 @@ public class PlayerControl : MonoBehaviour
 	public bool jump = false;				// Condition for whether the player should jump.
 	[HideInInspector]
 	public bool inControl = false;
-
+	[HideInInspector]
+	public NetworkPlayer owner;
+	[HideInInspector]
+	public Vector3 serverPosition;
+	[HideInInspector]
+	public Quaternion serverRotation; 
+	private float positionErrorThreshold = .2f;
 
 	public float moveForce = 365f;			// Amount of force added to move the player left and right.
 	public float maxSpeed = 5f;				// The fastest the player can travel in the x axis.
@@ -26,13 +33,15 @@ public class PlayerControl : MonoBehaviour
 	public float tauntProbability = 50f;	// Chance of a taunt happening.
 	public float tauntDelay = 1f;			// Delay for when the taunt should happen.
 
-
 	private int tauntIndex;					// The index of the taunts array indicating the most recent taunt.
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
 	private bool grounded = false;			// Whether or not the player is grounded.
 	private Animator anim;					// Reference to the player's animator component.
-	private NetworkView netView;
+	public NetworkView netView;
 	private Rigidbody2D rigidBody;
+	private List<Gun> guns;
+	private Gun equippedGun;
+
 
 
 	void Awake()
@@ -42,20 +51,20 @@ public class PlayerControl : MonoBehaviour
 		anim = GetComponent<Animator>();
 		netView = this.GetComponent<UnityEngine.NetworkView>();
 		rigidBody = GetComponent<Rigidbody2D>();
+
+		guns = new List<Gun>(GetComponentsInChildren<Gun>());
+		if(guns.Count > 0)
+			equippedGun = guns[0];
 	}
 
 
 	void Update()
 	{
 
-		if(inControl)
-		{
-			// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
-			grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
 
-			// If the jump button is pressed and the player is grounded then the player should jump.
-			if(Input.GetButtonDown("Jump") && grounded)
-				jump = true;
+		if(Network.isServer)
+		{
+			grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 		}
 	}
 
@@ -64,19 +73,18 @@ public class PlayerControl : MonoBehaviour
 	{
 		if(inControl)
 		{
+			if(Input.GetButtonDown("Jump"))
+				jump = true;
 
 			// Cache the horizontal input.
-			float h = Input.GetAxis("Horizontal");
+			float horizontalInput = Input.GetAxis("Horizontal");
+			bool shoot = Input.GetButtonDown("Fire1");
+			Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 			// The Speed animator parameter is set to the absolute value of the horizontal input.
-			anim.SetFloat("Speed", Mathf.Abs(h));
+			anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
 
-			// move
-			if(h * rigidBody.velocity.x < maxSpeed)
-			{
-				Vector2 force = Vector2.right * h * moveForce;
-				MoveHorizontal(force.x, force.y);
-			}
+			MoveHorizontal(Vector2.right * horizontalInput * moveForce);
 
 			if (Camera.current != null) 
 			{ 
@@ -94,29 +102,37 @@ public class PlayerControl : MonoBehaviour
 				}
 			}
 
+			netView.RPC("SendInput", RPCMode.Server, horizontalInput, jump, shoot, mouseWorldPos);
 
-			// jump
 			if(this.jump)
 			{
 				jump = false;
 				Jump();
 			}
-
-			netView.RPC("updatePlayer", RPCMode.OthersBuffered, transform.position, new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, 0f));
 		}
 	}
 
-	void MoveHorizontal(float x, float y)
-	{
-
-
-		// add a force to the player.
-		rigidBody.AddForce(new Vector2(x, y));
+	public void lerpToTarget() {
+		var distance = Vector3.Distance(transform.position, serverPosition);
 		
-		// If the player's horizontal velocity is greater than the maxSpeed
+		//only correct if the error margin (the distance) is too extreme
+		if (distance >= positionErrorThreshold) {
+			float lerp = ((1f / distance) * moveForce) / 100f;
+
+			transform.position = Vector3.Lerp(transform.position, serverPosition, lerp);
+			transform.rotation = Quaternion.Slerp(transform.rotation, serverRotation, lerp);
+		}
+	}
+
+	void MoveHorizontal(Vector2 force)
+	{
+		if(!grounded || rigidBody.velocity.x > maxSpeed)
+			return;
+
+		rigidBody.AddForce(new Vector2(force.x, force.y));
+
 		if(Mathf.Abs(rigidBody.velocity.x) > maxSpeed)
 		{
-			// set the player's velocity to the maxSpeed in the x axis.
 			rigidBody.velocity = new Vector2(Mathf.Sign(rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
 		}
 	}
@@ -160,13 +176,6 @@ public class PlayerControl : MonoBehaviour
 		rigidBody.AddForce(new Vector2(0f, jumpForce));
     }
 
-	[RPC]
-	void updatePlayer(Vector3 position, Vector3 velocity){
-		transform.position = position;
-		rigidBody.velocity = velocity;
-	}
-
-
 	public IEnumerator Taunt()
 	{
 		// Check the random chance of taunting.
@@ -202,5 +211,33 @@ public class PlayerControl : MonoBehaviour
 		else
 			// Otherwise return this index.
 			return i;
+	}
+
+	[RPC]
+	void UpdatePlayer(Vector3 position, Vector3 velocity)
+	{
+		if ((transform.position - position).magnitude > .5)
+			transform.position = position;
+
+		rigidBody.velocity = velocity;
+	}
+
+	[RPC]
+	void SendInput(float horizontalInput, bool jump, bool shoot, Vector3 worldMousePos)
+	{
+		if(Network.isServer)
+		{
+			Vector2 force = Vector2.right * horizontalInput * moveForce;
+			MoveHorizontal(force);
+			if(shoot){}
+				//shoot();
+
+			if(jump && grounded)
+				Jump();
+
+		}
+
+		//Vector3 velocity = rigidBody.velocity;
+		//netView.RPC("UpdatePlayer", RPCMode.Others, transform.position, velocity);
 	}
 }
