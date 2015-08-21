@@ -13,16 +13,16 @@ public class PlayerControl : MonoBehaviour
 	[HideInInspector]
 	public bool facingRight = true;			// For determining which way the player is currently facing.
 	[HideInInspector]
-	public bool jump = false;				// Condition for whether the player should jump.
-	[HideInInspector]
 	public bool inControl = false;
 	[HideInInspector]
 	public NetworkPlayer owner;
 	[HideInInspector]
+	public NetworkView netView;
+	[HideInInspector]
 	public Vector3 serverPosition;
 	[HideInInspector]
 	public Quaternion serverRotation; 
-	private float positionErrorThreshold = .2f;
+	private float positionErrorThreshold = .1f;
 
 	public float moveForce = 365f;			// Amount of force added to move the player left and right.
 	public float maxSpeed = 5f;				// The fastest the player can travel in the x axis.
@@ -37,10 +37,15 @@ public class PlayerControl : MonoBehaviour
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
 	private bool grounded = false;			// Whether or not the player is grounded.
 	private Animator anim;					// Reference to the player's animator component.
-	public NetworkView netView;
+
 	private Rigidbody2D rigidBody;
 	private List<Gun> guns;
 	private Gun equippedGun;
+
+	private float horizontalInput;
+	private bool jump;
+	private bool shoot;
+	private Vector3 mouseWorldPos;
 
 
 
@@ -60,64 +65,74 @@ public class PlayerControl : MonoBehaviour
 
 	void Update()
 	{
-
-
-		if(Network.isServer)
+		if(inControl)
 		{
-			grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+			UpdateInput(Input.GetAxis("Horizontal"), Input.GetButtonDown("Jump"), Input.GetButtonDown("Fire1"), Input.mousePosition);
+
+			netView.RPC("SendInput", RPCMode.Server, horizontalInput, jump, shoot, mouseWorldPos);
 		}
+	}
+
+
+	void UpdateInput(float horizontalInput, bool jump, bool shoot, Vector3 mousePosition)
+	{
+		this.horizontalInput = horizontalInput;
+		this.jump = jump;
+		this.shoot = shoot;
+		this.mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePosition);
 	}
 
 
 	void FixedUpdate ()
 	{
-		if(inControl)
+		if(inControl || Network.isServer)
 		{
-			if(Input.GetButtonDown("Jump"))
-				jump = true;
-
-			// Cache the horizontal input.
-			float horizontalInput = Input.GetAxis("Horizontal");
-			bool shoot = Input.GetButtonDown("Fire1");
-			Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-			// The Speed animator parameter is set to the absolute value of the horizontal input.
-			anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
-
-			MoveHorizontal(Vector2.right * horizontalInput * moveForce);
-
-			if (Camera.current != null) 
-			{ 
-				// check if mouse is on the right and player is facing left.  If yes, turn player right.
-				if(Camera.current.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, Input.mousePosition.z - Camera.current.transform.position.z)).x
-				   > this.transform.position.x && !this.facingRight)
-				{
-					TurnRight();
-				}
-				// check if mouse is on the left side of the player, and the player is facing left. if yes, turn player left.
-				if(Camera.current.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, Input.mousePosition.z - Camera.current.transform.position.z)).x
-				   < this.transform.position.x && this.facingRight)
-				{
-					TurnLeft();
-				}
-			}
-
-			netView.RPC("SendInput", RPCMode.Server, horizontalInput, jump, shoot, mouseWorldPos);
-
-			if(this.jump)
+			grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+			if(jump && grounded)
 			{
 				jump = false;
 				Jump();
 			}
+
+			// The Speed animator parameter is set to the absolute value of the horizontal input.
+//			anim.SetFloat("Speed", Mathf.Abs(horizontalInput));
+
+//			if (Camera.current != null) 
+//			{ 
+//				// check if mouse is on the right and player is facing left.  If yes, turn player right.
+//				if(Camera.current.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, Input.mousePosition.z - Camera.current.transform.position.z)).x
+//				   > this.transform.position.x && !this.facingRight)
+//				{
+//					TurnRight();
+//				}
+//				// check if mouse is on the left side of the player, and the player is facing left. if yes, turn player left.
+//				if(Camera.current.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, Input.mousePosition.z - Camera.current.transform.position.z)).x
+//				   < this.transform.position.x && this.facingRight)
+//				{
+//					TurnLeft();
+//				}
+//			}
+
+
+			//netView.RPC("UpdatePlayer", RPCMode.Server, transform.position, new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, 0f));
+
+			Vector2 force = Vector2.right * horizontalInput * moveForce;
+			MoveHorizontal(force);
+			if(shoot){}
+			//shoot();
+			
+
 		}
 	}
 
 	public void lerpToTarget() {
+		//Debug.Log("Ran lerp!");
+
 		var distance = Vector3.Distance(transform.position, serverPosition);
 		
 		//only correct if the error margin (the distance) is too extreme
 		if (distance >= positionErrorThreshold) {
-			float lerp = ((1f / distance) * moveForce) / 100f;
+			float lerp = ((1f / distance) * 50f) / 100f;
 
 			transform.position = Vector3.Lerp(transform.position, serverPosition, lerp);
 			transform.rotation = Quaternion.Slerp(transform.rotation, serverRotation, lerp);
@@ -225,17 +240,8 @@ public class PlayerControl : MonoBehaviour
 	[RPC]
 	void SendInput(float horizontalInput, bool jump, bool shoot, Vector3 worldMousePos)
 	{
-		if(Network.isServer)
-		{
-			Vector2 force = Vector2.right * horizontalInput * moveForce;
-			MoveHorizontal(force);
-			if(shoot){}
-				//shoot();
 
-			if(jump && grounded)
-				Jump();
-
-		}
+		UpdateInput(horizontalInput, jump, shoot, worldMousePos);
 
 		//Vector3 velocity = rigidBody.velocity;
 		//netView.RPC("UpdatePlayer", RPCMode.Others, transform.position, velocity);

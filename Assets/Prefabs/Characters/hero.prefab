@@ -114,6 +114,7 @@ GameObject:
   - 114: {fileID: 11400006}
   - 82: {fileID: 8200004}
   - 148: {fileID: 14818396}
+  - 114: {fileID: 11409816}
   m_Layer: 9
   m_Name: hero
   m_TagString: Player
@@ -646,8 +647,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facingRight: 1
-  jump: 0
   inControl: 0
+  netView: {fileID: 0}
   serverPosition: {x: 0, y: 0, z: 0}
   serverRotation: {x: 0, y: 0, z: 0, w: 0}
   moveForce: 365
@@ -669,7 +670,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ddd0ca15e5d0a42b98f08337c1690bb1, type: 3}
   tauntProbability: 50
   tauntDelay: 1
-  netView: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -705,6 +705,20 @@ MonoBehaviour:
   bombCount: 0
   bombsAway: {fileID: 8300000, guid: 2d487c0108565443ba2dea29b521e120, type: 3}
   bomb: {fileID: 100000, guid: 9f1c955688b614b259cf703b0b1c73d2, type: 2}
+--- !u!114 &11409816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a658709a8590324ba1f65630cabc175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  observedTransform: {fileID: 400020}
+  receiver: {fileID: 11400002}
+  pingMargin: .5
 --- !u!148 &14818396
 NetworkView:
   m_ObjectHideFlags: 1
@@ -712,8 +726,8 @@ NetworkView:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100020}
   m_Enabled: 1
-  m_StateSynchronization: 2
-  m_Observed: {fileID: 400020}
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 11409816}
   m_ViewID:
     m_ID: 0
     m_Type: 0

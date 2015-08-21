@@ -26,7 +26,7 @@ public class Predictor : MonoBehaviour {
 			receiver.serverPosition = pos;
 			receiver.serverRotation = rot;
 			//Smoothly correct clients position
-			receiver.lerpToTarget();
+			//receiver.lerpToTarget();
 			
 			//Take care of data for interpolating remote objects movements
 			// Shift up the buffer
@@ -38,14 +38,7 @@ public class Predictor : MonoBehaviour {
 		}
 	}
 
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	void Start()
+	{
 	}
 }

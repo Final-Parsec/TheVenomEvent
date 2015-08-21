@@ -6,4 +6,6 @@ class HardCodedMapData : IMapData
     {
         return new Vector3(-17.327f, 3.871f, -1f);
     }
+
+
 }

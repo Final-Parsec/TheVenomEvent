@@ -7,18 +7,19 @@ using System.Linq;
 [ExecuteInEditMode]
 
 public class NetworkManager : MonoBehaviour {
-	
+
+	public static string serverIp = "127.0.0.1";
+	//public static string serverIp = "162.243.141.8";
+
+
 	public Transform player;
-	string registeredName = "somekindofuniquename";
-	float refreshRequestLength = 3.0f;
 	HostData[] hostData;
 	public string chosenGameName = "";
 	public NetworkPlayer myNetworkPlayer;
 
     void Start()
     {
-        Network.Connect("127.0.0.1", 2003);
-        //Network.Connect("162.243.141.8", 2003);
+        Network.Connect(serverIp, 2003);
     }
 	
 	void OnConnectedToServer() {
@@ -47,16 +48,4 @@ public class NetworkManager : MonoBehaviour {
         }
     }
 
-	public IEnumerator RefreshHostList ()
-	{
-	    MasterServer.ipAddress = "127.0.0.1";
-	    MasterServer.port = 2003;
-        
-        MasterServer.RequestHostList ("A");
-		float timeEnd = Time.time + refreshRequestLength;
-		while (Time.time < timeEnd) {
-			hostData = MasterServer.PollHostList();
-			yield return new WaitForEndOfFrame();
-		}
-	}
 }
